@@ -227,4 +227,5 @@ export const KEYBINDINGS_EDITOR_COMMAND_SHOW_CONFLICTS = 'keybindings.editor.sho
 export const KEYBINDINGS_EDITOR_COMMAND_FOCUS_KEYBINDINGS = 'keybindings.editor.focusKeybindings';
 
 export const FOLDER_SETTINGS_PATH = join('.vscode', 'settings.json');
+export const FOLDER_SETTINGS_OVERRIDE_PATH = join('.vscode', 'settings.override.json');
 export const DEFAULT_SETTINGS_EDITOR_SETTING = 'workbench.settings.openDefaultSettings';

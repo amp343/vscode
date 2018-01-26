@@ -9,6 +9,8 @@ import { createDecorator } from 'vs/platform/instantiation/common/instantiation'
 export const FOLDER_CONFIG_FOLDER_NAME = '.vscode';
 export const FOLDER_SETTINGS_NAME = 'settings';
 export const FOLDER_SETTINGS_PATH = `${FOLDER_CONFIG_FOLDER_NAME}/${FOLDER_SETTINGS_NAME}.json`;
+export const FOLDER_SETTINGS_OVERRIDE_NAME = 'settings.override';
+export const FOLDER_SETTINGS_OVERRIDE_PATH = `${FOLDER_CONFIG_FOLDER_NAME}/${FOLDER_SETTINGS_OVERRIDE_NAME}.json`;
 
 export const IWorkspaceConfigurationService = createDecorator<IWorkspaceConfigurationService>('configurationService');
 
