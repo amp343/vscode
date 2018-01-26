@@ -17,7 +17,7 @@ import { isLinux } from 'vs/base/common/platform';
 import { ConfigWatcher } from 'vs/base/node/config';
 import { ConfigurationModel, ConfigurationModelParser } from 'vs/platform/configuration/common/configurationModels';
 import { WorkspaceConfigurationModelParser, FolderSettingsModelParser, StandaloneConfigurationModelParser } from 'vs/workbench/services/configuration/common/configurationModels';
-import { WORKSPACE_STANDALONE_CONFIGURATIONS, FOLDER_SETTINGS_PATH, TASKS_CONFIGURATION_KEY, LAUNCH_CONFIGURATION_KEY } from 'vs/workbench/services/configuration/common/configuration';
+import { WORKSPACE_STANDALONE_CONFIGURATIONS, FOLDER_SETTINGS_PATH, FOLDER_SETTINGS_OVERRIDE_PATH, TASKS_CONFIGURATION_KEY, LAUNCH_CONFIGURATION_KEY } from 'vs/workbench/services/configuration/common/configuration';
 import { IStoredWorkspace, IStoredWorkspaceFolder } from 'vs/platform/workspaces/common/workspaces';
 import * as extfs from 'vs/base/node/extfs';
 import { JSONEditingService } from 'vs/workbench/services/configuration/node/jsonEditingService';
@@ -298,7 +298,7 @@ export class FolderConfiguration extends Disposable {
 
 	private createConfigurationModelParser(content: IContent): ConfigurationModelParser {
 		const path = this.toFolderRelativePath(content.resource);
-		if (path === FOLDER_SETTINGS_PATH) {
+		if (path === FOLDER_SETTINGS_PATH || path === FOLDER_SETTINGS_OVERRIDE_PATH) {
 			this._folderSettingsModelParser.parse(content.value);
 			return this._folderSettingsModelParser;
 		} else {
@@ -313,7 +313,12 @@ export class FolderConfiguration extends Disposable {
 	}
 
 	private isWorkspaceConfigurationFile(folderRelativePath: string): boolean {
-		return [FOLDER_SETTINGS_PATH, WORKSPACE_STANDALONE_CONFIGURATIONS[TASKS_CONFIGURATION_KEY], WORKSPACE_STANDALONE_CONFIGURATIONS[LAUNCH_CONFIGURATION_KEY]].some(p => p === folderRelativePath);
+		return [
+			FOLDER_SETTINGS_PATH,
+			FOLDER_SETTINGS_OVERRIDE_PATH,
+			WORKSPACE_STANDALONE_CONFIGURATIONS[TASKS_CONFIGURATION_KEY],
+			WORKSPACE_STANDALONE_CONFIGURATIONS[LAUNCH_CONFIGURATION_KEY]
+		].some(p => p === folderRelativePath);
 	}
 
 	private toResource(folderRelativePath: string): URI {
